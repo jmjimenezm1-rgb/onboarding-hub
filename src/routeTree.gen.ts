@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AprovisionamientoRouteImport } from './routes/aprovisionamiento'
 import { Route as AprovisionamientoIndexRouteImport } from './routes/aprovisionamiento.index'
+import { Route as AprovisionamientoConectoresRouteImport } from './routes/aprovisionamiento.conectores'
 import { Route as AprovisionamientoReglasRouteImport } from './routes/aprovisionamiento.reglas'
 import { Route as AprovisionamientoSolicitudesIndexRouteImport } from './routes/aprovisionamiento.solicitudes.index'
 import { Route as AprovisionamientoSolicitudesIdRouteImport } from './routes/aprovisionamiento.solicitudes.$id'
@@ -31,6 +32,12 @@ const AprovisionamientoIndexRoute = AprovisionamientoIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AprovisionamientoRoute,
 } as any)
+const AprovisionamientoConectoresRoute =
+  AprovisionamientoConectoresRouteImport.update({
+    id: '/conectores',
+    path: '/conectores',
+    getParentRoute: () => AprovisionamientoRoute,
+  } as any)
 const AprovisionamientoReglasRoute = AprovisionamientoReglasRouteImport.update({
   id: '/reglas',
   path: '/reglas',
@@ -52,6 +59,7 @@ const AprovisionamientoSolicitudesIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aprovisionamiento': typeof AprovisionamientoRouteWithChildren
+  '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
   '/aprovisionamiento/': typeof AprovisionamientoIndexRoute
   '/aprovisionamiento/solicitudes/$id': typeof AprovisionamientoSolicitudesIdRoute
@@ -59,6 +67,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
   '/aprovisionamiento': typeof AprovisionamientoIndexRoute
   '/aprovisionamiento/solicitudes/$id': typeof AprovisionamientoSolicitudesIdRoute
@@ -68,6 +77,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/aprovisionamiento': typeof AprovisionamientoRouteWithChildren
+  '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
   '/aprovisionamiento/': typeof AprovisionamientoIndexRoute
   '/aprovisionamiento/solicitudes/$id': typeof AprovisionamientoSolicitudesIdRoute
@@ -78,6 +88,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/aprovisionamiento'
+    | '/aprovisionamiento/conectores'
     | '/aprovisionamiento/reglas'
     | '/aprovisionamiento/'
     | '/aprovisionamiento/solicitudes/$id'
@@ -85,6 +96,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/aprovisionamiento/conectores'
     | '/aprovisionamiento/reglas'
     | '/aprovisionamiento'
     | '/aprovisionamiento/solicitudes/$id'
@@ -93,6 +105,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/aprovisionamiento'
+    | '/aprovisionamiento/conectores'
     | '/aprovisionamiento/reglas'
     | '/aprovisionamiento/'
     | '/aprovisionamiento/solicitudes/$id'
@@ -127,6 +140,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AprovisionamientoIndexRouteImport
       parentRoute: typeof AprovisionamientoRoute
     }
+    '/aprovisionamiento/conectores': {
+      id: '/aprovisionamiento/conectores'
+      path: '/conectores'
+      fullPath: '/aprovisionamiento/conectores'
+      preLoaderRoute: typeof AprovisionamientoConectoresRouteImport
+      parentRoute: typeof AprovisionamientoRoute
+    }
     '/aprovisionamiento/reglas': {
       id: '/aprovisionamiento/reglas'
       path: '/reglas'
@@ -152,6 +172,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AprovisionamientoRouteChildren {
+  AprovisionamientoConectoresRoute: typeof AprovisionamientoConectoresRoute
   AprovisionamientoReglasRoute: typeof AprovisionamientoReglasRoute
   AprovisionamientoIndexRoute: typeof AprovisionamientoIndexRoute
   AprovisionamientoSolicitudesIdRoute: typeof AprovisionamientoSolicitudesIdRoute
@@ -159,6 +180,7 @@ interface AprovisionamientoRouteChildren {
 }
 
 const AprovisionamientoRouteChildren: AprovisionamientoRouteChildren = {
+  AprovisionamientoConectoresRoute: AprovisionamientoConectoresRoute,
   AprovisionamientoReglasRoute: AprovisionamientoReglasRoute,
   AprovisionamientoIndexRoute: AprovisionamientoIndexRoute,
   AprovisionamientoSolicitudesIdRoute: AprovisionamientoSolicitudesIdRoute,
