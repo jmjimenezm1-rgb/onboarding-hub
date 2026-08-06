@@ -17,6 +17,7 @@ import { Route as AprovisionamientoIndexRouteImport } from './routes/aprovisiona
 import { Route as AprovisionamientoConectoresRouteImport } from './routes/aprovisionamiento.conectores'
 import { Route as AprovisionamientoHistorialRouteImport } from './routes/aprovisionamiento.historial'
 import { Route as AprovisionamientoReglasRouteImport } from './routes/aprovisionamiento.reglas'
+import { Route as PortalIndexRouteImport } from './routes/portal.index'
 import { Route as AprovisionamientoSolicitudesIndexRouteImport } from './routes/aprovisionamiento.solicitudes.index'
 import { Route as AprovisionamientoSolicitudesIdRouteImport } from './routes/aprovisionamiento.solicitudes.$id'
 
@@ -62,6 +63,11 @@ const AprovisionamientoReglasRoute = AprovisionamientoReglasRouteImport.update({
   path: '/reglas',
   getParentRoute: () => AprovisionamientoRoute,
 } as any)
+const PortalIndexRoute = PortalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PortalRoute,
+} as any)
 const AprovisionamientoSolicitudesIndexRoute =
   AprovisionamientoSolicitudesIndexRouteImport.update({
     id: '/solicitudes/',
@@ -79,22 +85,23 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aprovisionamiento': typeof AprovisionamientoRouteWithChildren
   '/integraciones': typeof IntegracionesRoute
-  '/portal': typeof PortalRoute
+  '/portal': typeof PortalRouteWithChildren
   '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/historial': typeof AprovisionamientoHistorialRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
   '/aprovisionamiento/': typeof AprovisionamientoIndexRoute
+  '/portal/': typeof PortalIndexRoute
   '/aprovisionamiento/solicitudes/$id': typeof AprovisionamientoSolicitudesIdRoute
   '/aprovisionamiento/solicitudes/': typeof AprovisionamientoSolicitudesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/integraciones': typeof IntegracionesRoute
-  '/portal': typeof PortalRoute
   '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/historial': typeof AprovisionamientoHistorialRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
   '/aprovisionamiento': typeof AprovisionamientoIndexRoute
+  '/portal': typeof PortalIndexRoute
   '/aprovisionamiento/solicitudes/$id': typeof AprovisionamientoSolicitudesIdRoute
   '/aprovisionamiento/solicitudes': typeof AprovisionamientoSolicitudesIndexRoute
 }
@@ -103,11 +110,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/aprovisionamiento': typeof AprovisionamientoRouteWithChildren
   '/integraciones': typeof IntegracionesRoute
-  '/portal': typeof PortalRoute
+  '/portal': typeof PortalRouteWithChildren
   '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/historial': typeof AprovisionamientoHistorialRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
   '/aprovisionamiento/': typeof AprovisionamientoIndexRoute
+  '/portal/': typeof PortalIndexRoute
   '/aprovisionamiento/solicitudes/$id': typeof AprovisionamientoSolicitudesIdRoute
   '/aprovisionamiento/solicitudes/': typeof AprovisionamientoSolicitudesIndexRoute
 }
@@ -122,17 +130,18 @@ export interface FileRouteTypes {
     | '/aprovisionamiento/historial'
     | '/aprovisionamiento/reglas'
     | '/aprovisionamiento/'
+    | '/portal/'
     | '/aprovisionamiento/solicitudes/$id'
     | '/aprovisionamiento/solicitudes/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/integraciones'
-    | '/portal'
     | '/aprovisionamiento/conectores'
     | '/aprovisionamiento/historial'
     | '/aprovisionamiento/reglas'
     | '/aprovisionamiento'
+    | '/portal'
     | '/aprovisionamiento/solicitudes/$id'
     | '/aprovisionamiento/solicitudes'
   id:
@@ -145,6 +154,7 @@ export interface FileRouteTypes {
     | '/aprovisionamiento/historial'
     | '/aprovisionamiento/reglas'
     | '/aprovisionamiento/'
+    | '/portal/'
     | '/aprovisionamiento/solicitudes/$id'
     | '/aprovisionamiento/solicitudes/'
   fileRoutesById: FileRoutesById
@@ -153,7 +163,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AprovisionamientoRoute: typeof AprovisionamientoRouteWithChildren
   IntegracionesRoute: typeof IntegracionesRoute
-  PortalRoute: typeof PortalRoute
+  PortalRoute: typeof PortalRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -214,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AprovisionamientoReglasRouteImport
       parentRoute: typeof AprovisionamientoRoute
     }
+    '/portal/': {
+      id: '/portal/'
+      path: '/'
+      fullPath: '/portal/'
+      preLoaderRoute: typeof PortalIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
     '/aprovisionamiento/solicitudes/': {
       id: '/aprovisionamiento/solicitudes/'
       path: '/solicitudes'
@@ -253,11 +270,22 @@ const AprovisionamientoRouteChildren: AprovisionamientoRouteChildren = {
 const AprovisionamientoRouteWithChildren =
   AprovisionamientoRoute._addFileChildren(AprovisionamientoRouteChildren)
 
+interface PortalRouteChildren {
+  PortalIndexRoute: typeof PortalIndexRoute
+}
+
+const PortalRouteChildren: PortalRouteChildren = {
+  PortalIndexRoute: PortalIndexRoute,
+}
+
+const PortalRouteWithChildren =
+  PortalRoute._addFileChildren(PortalRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AprovisionamientoRoute: AprovisionamientoRouteWithChildren,
   IntegracionesRoute: IntegracionesRoute,
-  PortalRoute: PortalRoute,
+  PortalRoute: PortalRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
