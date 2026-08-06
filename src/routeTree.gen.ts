@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AprovisionamientoRouteImport } from './routes/aprovisionamiento'
+import { Route as IntegracionesRouteImport } from './routes/integraciones'
 import { Route as AprovisionamientoIndexRouteImport } from './routes/aprovisionamiento.index'
 import { Route as AprovisionamientoConectoresRouteImport } from './routes/aprovisionamiento.conectores'
 import { Route as AprovisionamientoHistorialRouteImport } from './routes/aprovisionamiento.historial'
@@ -26,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
 const AprovisionamientoRoute = AprovisionamientoRouteImport.update({
   id: '/aprovisionamiento',
   path: '/aprovisionamiento',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegracionesRoute = IntegracionesRouteImport.update({
+  id: '/integraciones',
+  path: '/integraciones',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AprovisionamientoIndexRoute = AprovisionamientoIndexRouteImport.update({
@@ -66,6 +72,7 @@ const AprovisionamientoSolicitudesIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aprovisionamiento': typeof AprovisionamientoRouteWithChildren
+  '/integraciones': typeof IntegracionesRoute
   '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/historial': typeof AprovisionamientoHistorialRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
@@ -75,6 +82,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/integraciones': typeof IntegracionesRoute
   '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/historial': typeof AprovisionamientoHistorialRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/aprovisionamiento': typeof AprovisionamientoRouteWithChildren
+  '/integraciones': typeof IntegracionesRoute
   '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/historial': typeof AprovisionamientoHistorialRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
@@ -98,6 +107,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/aprovisionamiento'
+    | '/integraciones'
     | '/aprovisionamiento/conectores'
     | '/aprovisionamiento/historial'
     | '/aprovisionamiento/reglas'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/integraciones'
     | '/aprovisionamiento/conectores'
     | '/aprovisionamiento/historial'
     | '/aprovisionamiento/reglas'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/aprovisionamiento'
+    | '/integraciones'
     | '/aprovisionamiento/conectores'
     | '/aprovisionamiento/historial'
     | '/aprovisionamiento/reglas'
@@ -128,6 +140,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AprovisionamientoRoute: typeof AprovisionamientoRouteWithChildren
+  IntegracionesRoute: typeof IntegracionesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -144,6 +157,13 @@ declare module '@tanstack/react-router' {
       path: '/aprovisionamiento'
       fullPath: '/aprovisionamiento'
       preLoaderRoute: typeof AprovisionamientoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integraciones': {
+      id: '/integraciones'
+      path: '/integraciones'
+      fullPath: '/integraciones'
+      preLoaderRoute: typeof IntegracionesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/aprovisionamiento/': {
@@ -216,6 +236,7 @@ const AprovisionamientoRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AprovisionamientoRoute: AprovisionamientoRouteWithChildren,
+  IntegracionesRoute: IntegracionesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
