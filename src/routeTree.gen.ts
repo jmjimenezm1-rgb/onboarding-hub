@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AprovisionamientoRouteImport } from './routes/aprovisionamiento'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AprovisionamientoRoute = AprovisionamientoRouteImport.update({
+  id: '/aprovisionamiento',
+  path: '/aprovisionamiento',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aprovisionamiento': typeof AprovisionamientoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aprovisionamiento': typeof AprovisionamientoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aprovisionamiento': typeof AprovisionamientoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/aprovisionamiento'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/aprovisionamiento'
+  id: '__root__' | '/' | '/aprovisionamiento'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AprovisionamientoRoute: typeof AprovisionamientoRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/aprovisionamiento': {
+      id: '/aprovisionamiento'
+      path: '/aprovisionamiento'
+      fullPath: '/aprovisionamiento'
+      preLoaderRoute: typeof AprovisionamientoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AprovisionamientoRoute: AprovisionamientoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
