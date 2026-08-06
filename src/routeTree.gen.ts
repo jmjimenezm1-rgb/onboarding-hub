@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AprovisionamientoRouteImport } from './routes/aprovisionamiento'
 import { Route as IntegracionesRouteImport } from './routes/integraciones'
+import { Route as PortalRouteImport } from './routes/portal'
 import { Route as AprovisionamientoIndexRouteImport } from './routes/aprovisionamiento.index'
 import { Route as AprovisionamientoConectoresRouteImport } from './routes/aprovisionamiento.conectores'
 import { Route as AprovisionamientoHistorialRouteImport } from './routes/aprovisionamiento.historial'
@@ -32,6 +33,11 @@ const AprovisionamientoRoute = AprovisionamientoRouteImport.update({
 const IntegracionesRoute = IntegracionesRouteImport.update({
   id: '/integraciones',
   path: '/integraciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AprovisionamientoIndexRoute = AprovisionamientoIndexRouteImport.update({
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aprovisionamiento': typeof AprovisionamientoRouteWithChildren
   '/integraciones': typeof IntegracionesRoute
+  '/portal': typeof PortalRoute
   '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/historial': typeof AprovisionamientoHistorialRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/integraciones': typeof IntegracionesRoute
+  '/portal': typeof PortalRoute
   '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/historial': typeof AprovisionamientoHistorialRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/aprovisionamiento': typeof AprovisionamientoRouteWithChildren
   '/integraciones': typeof IntegracionesRoute
+  '/portal': typeof PortalRoute
   '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/historial': typeof AprovisionamientoHistorialRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/'
     | '/aprovisionamiento'
     | '/integraciones'
+    | '/portal'
     | '/aprovisionamiento/conectores'
     | '/aprovisionamiento/historial'
     | '/aprovisionamiento/reglas'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/integraciones'
+    | '/portal'
     | '/aprovisionamiento/conectores'
     | '/aprovisionamiento/historial'
     | '/aprovisionamiento/reglas'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/'
     | '/aprovisionamiento'
     | '/integraciones'
+    | '/portal'
     | '/aprovisionamiento/conectores'
     | '/aprovisionamiento/historial'
     | '/aprovisionamiento/reglas'
@@ -141,6 +153,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AprovisionamientoRoute: typeof AprovisionamientoRouteWithChildren
   IntegracionesRoute: typeof IntegracionesRoute
+  PortalRoute: typeof PortalRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -164,6 +177,13 @@ declare module '@tanstack/react-router' {
       path: '/integraciones'
       fullPath: '/integraciones'
       preLoaderRoute: typeof IntegracionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portal': {
+      id: '/portal'
+      path: '/portal'
+      fullPath: '/portal'
+      preLoaderRoute: typeof PortalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/aprovisionamiento/': {
@@ -237,6 +257,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AprovisionamientoRoute: AprovisionamientoRouteWithChildren,
   IntegracionesRoute: IntegracionesRoute,
+  PortalRoute: PortalRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
