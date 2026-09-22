@@ -18,7 +18,15 @@ import { Route as AprovisionamientoConectoresRouteImport } from './routes/aprovi
 import { Route as AprovisionamientoHistorialRouteImport } from './routes/aprovisionamiento.historial'
 import { Route as AprovisionamientoReglasRouteImport } from './routes/aprovisionamiento.reglas'
 import { Route as PortalIndexRouteImport } from './routes/portal.index'
+import { Route as PortalAplicacionesRouteImport } from './routes/portal.aplicaciones'
+import { Route as PortalConsumoRouteImport } from './routes/portal.consumo'
+import { Route as PortalDocumentosRouteImport } from './routes/portal.documentos'
+import { Route as PortalFacturacionRouteImport } from './routes/portal.facturacion'
 import { Route as PortalNotificacionesRouteImport } from './routes/portal.notificaciones'
+import { Route as PortalPerfilRouteImport } from './routes/portal.perfil'
+import { Route as PortalSeguridadRouteImport } from './routes/portal.seguridad'
+import { Route as PortalSoporteRouteImport } from './routes/portal.soporte'
+import { Route as PortalUsuariosRouteImport } from './routes/portal.usuarios'
 import { Route as AprovisionamientoSolicitudesIndexRouteImport } from './routes/aprovisionamiento.solicitudes.index'
 import { Route as AprovisionamientoSolicitudesIdRouteImport } from './routes/aprovisionamiento.solicitudes.$id'
 
@@ -69,9 +77,49 @@ const PortalIndexRoute = PortalIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PortalRoute,
 } as any)
+const PortalAplicacionesRoute = PortalAplicacionesRouteImport.update({
+  id: '/aplicaciones',
+  path: '/aplicaciones',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalConsumoRoute = PortalConsumoRouteImport.update({
+  id: '/consumo',
+  path: '/consumo',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalDocumentosRoute = PortalDocumentosRouteImport.update({
+  id: '/documentos',
+  path: '/documentos',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalFacturacionRoute = PortalFacturacionRouteImport.update({
+  id: '/facturacion',
+  path: '/facturacion',
+  getParentRoute: () => PortalRoute,
+} as any)
 const PortalNotificacionesRoute = PortalNotificacionesRouteImport.update({
   id: '/notificaciones',
   path: '/notificaciones',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalPerfilRoute = PortalPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalSeguridadRoute = PortalSeguridadRouteImport.update({
+  id: '/seguridad',
+  path: '/seguridad',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalSoporteRoute = PortalSoporteRouteImport.update({
+  id: '/soporte',
+  path: '/soporte',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalUsuariosRoute = PortalUsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
   getParentRoute: () => PortalRoute,
 } as any)
 const AprovisionamientoSolicitudesIndexRoute =
@@ -95,7 +143,15 @@ export interface FileRoutesByFullPath {
   '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/historial': typeof AprovisionamientoHistorialRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
+  '/portal/aplicaciones': typeof PortalAplicacionesRoute
+  '/portal/consumo': typeof PortalConsumoRoute
+  '/portal/documentos': typeof PortalDocumentosRoute
+  '/portal/facturacion': typeof PortalFacturacionRoute
   '/portal/notificaciones': typeof PortalNotificacionesRoute
+  '/portal/perfil': typeof PortalPerfilRoute
+  '/portal/seguridad': typeof PortalSeguridadRoute
+  '/portal/soporte': typeof PortalSoporteRoute
+  '/portal/usuarios': typeof PortalUsuariosRoute
   '/aprovisionamiento/': typeof AprovisionamientoIndexRoute
   '/portal/': typeof PortalIndexRoute
   '/aprovisionamiento/solicitudes/$id': typeof AprovisionamientoSolicitudesIdRoute
@@ -107,7 +163,15 @@ export interface FileRoutesByTo {
   '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/historial': typeof AprovisionamientoHistorialRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
+  '/portal/aplicaciones': typeof PortalAplicacionesRoute
+  '/portal/consumo': typeof PortalConsumoRoute
+  '/portal/documentos': typeof PortalDocumentosRoute
+  '/portal/facturacion': typeof PortalFacturacionRoute
   '/portal/notificaciones': typeof PortalNotificacionesRoute
+  '/portal/perfil': typeof PortalPerfilRoute
+  '/portal/seguridad': typeof PortalSeguridadRoute
+  '/portal/soporte': typeof PortalSoporteRoute
+  '/portal/usuarios': typeof PortalUsuariosRoute
   '/aprovisionamiento': typeof AprovisionamientoIndexRoute
   '/portal': typeof PortalIndexRoute
   '/aprovisionamiento/solicitudes/$id': typeof AprovisionamientoSolicitudesIdRoute
@@ -122,7 +186,15 @@ export interface FileRoutesById {
   '/aprovisionamiento/conectores': typeof AprovisionamientoConectoresRoute
   '/aprovisionamiento/historial': typeof AprovisionamientoHistorialRoute
   '/aprovisionamiento/reglas': typeof AprovisionamientoReglasRoute
+  '/portal/aplicaciones': typeof PortalAplicacionesRoute
+  '/portal/consumo': typeof PortalConsumoRoute
+  '/portal/documentos': typeof PortalDocumentosRoute
+  '/portal/facturacion': typeof PortalFacturacionRoute
   '/portal/notificaciones': typeof PortalNotificacionesRoute
+  '/portal/perfil': typeof PortalPerfilRoute
+  '/portal/seguridad': typeof PortalSeguridadRoute
+  '/portal/soporte': typeof PortalSoporteRoute
+  '/portal/usuarios': typeof PortalUsuariosRoute
   '/aprovisionamiento/': typeof AprovisionamientoIndexRoute
   '/portal/': typeof PortalIndexRoute
   '/aprovisionamiento/solicitudes/$id': typeof AprovisionamientoSolicitudesIdRoute
@@ -138,7 +210,15 @@ export interface FileRouteTypes {
     | '/aprovisionamiento/conectores'
     | '/aprovisionamiento/historial'
     | '/aprovisionamiento/reglas'
+    | '/portal/aplicaciones'
+    | '/portal/consumo'
+    | '/portal/documentos'
+    | '/portal/facturacion'
     | '/portal/notificaciones'
+    | '/portal/perfil'
+    | '/portal/seguridad'
+    | '/portal/soporte'
+    | '/portal/usuarios'
     | '/aprovisionamiento/'
     | '/portal/'
     | '/aprovisionamiento/solicitudes/$id'
@@ -150,7 +230,15 @@ export interface FileRouteTypes {
     | '/aprovisionamiento/conectores'
     | '/aprovisionamiento/historial'
     | '/aprovisionamiento/reglas'
+    | '/portal/aplicaciones'
+    | '/portal/consumo'
+    | '/portal/documentos'
+    | '/portal/facturacion'
     | '/portal/notificaciones'
+    | '/portal/perfil'
+    | '/portal/seguridad'
+    | '/portal/soporte'
+    | '/portal/usuarios'
     | '/aprovisionamiento'
     | '/portal'
     | '/aprovisionamiento/solicitudes/$id'
@@ -164,7 +252,15 @@ export interface FileRouteTypes {
     | '/aprovisionamiento/conectores'
     | '/aprovisionamiento/historial'
     | '/aprovisionamiento/reglas'
+    | '/portal/aplicaciones'
+    | '/portal/consumo'
+    | '/portal/documentos'
+    | '/portal/facturacion'
     | '/portal/notificaciones'
+    | '/portal/perfil'
+    | '/portal/seguridad'
+    | '/portal/soporte'
+    | '/portal/usuarios'
     | '/aprovisionamiento/'
     | '/portal/'
     | '/aprovisionamiento/solicitudes/$id'
@@ -243,11 +339,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalIndexRouteImport
       parentRoute: typeof PortalRoute
     }
+    '/portal/aplicaciones': {
+      id: '/portal/aplicaciones'
+      path: '/aplicaciones'
+      fullPath: '/portal/aplicaciones'
+      preLoaderRoute: typeof PortalAplicacionesRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/consumo': {
+      id: '/portal/consumo'
+      path: '/consumo'
+      fullPath: '/portal/consumo'
+      preLoaderRoute: typeof PortalConsumoRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/documentos': {
+      id: '/portal/documentos'
+      path: '/documentos'
+      fullPath: '/portal/documentos'
+      preLoaderRoute: typeof PortalDocumentosRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/facturacion': {
+      id: '/portal/facturacion'
+      path: '/facturacion'
+      fullPath: '/portal/facturacion'
+      preLoaderRoute: typeof PortalFacturacionRouteImport
+      parentRoute: typeof PortalRoute
+    }
     '/portal/notificaciones': {
       id: '/portal/notificaciones'
       path: '/notificaciones'
       fullPath: '/portal/notificaciones'
       preLoaderRoute: typeof PortalNotificacionesRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/perfil': {
+      id: '/portal/perfil'
+      path: '/perfil'
+      fullPath: '/portal/perfil'
+      preLoaderRoute: typeof PortalPerfilRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/seguridad': {
+      id: '/portal/seguridad'
+      path: '/seguridad'
+      fullPath: '/portal/seguridad'
+      preLoaderRoute: typeof PortalSeguridadRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/soporte': {
+      id: '/portal/soporte'
+      path: '/soporte'
+      fullPath: '/portal/soporte'
+      preLoaderRoute: typeof PortalSoporteRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/usuarios': {
+      id: '/portal/usuarios'
+      path: '/usuarios'
+      fullPath: '/portal/usuarios'
+      preLoaderRoute: typeof PortalUsuariosRouteImport
       parentRoute: typeof PortalRoute
     }
     '/aprovisionamiento/solicitudes/': {
@@ -290,12 +442,28 @@ const AprovisionamientoRouteWithChildren =
   AprovisionamientoRoute._addFileChildren(AprovisionamientoRouteChildren)
 
 interface PortalRouteChildren {
+  PortalAplicacionesRoute: typeof PortalAplicacionesRoute
+  PortalConsumoRoute: typeof PortalConsumoRoute
+  PortalDocumentosRoute: typeof PortalDocumentosRoute
+  PortalFacturacionRoute: typeof PortalFacturacionRoute
   PortalNotificacionesRoute: typeof PortalNotificacionesRoute
+  PortalPerfilRoute: typeof PortalPerfilRoute
+  PortalSeguridadRoute: typeof PortalSeguridadRoute
+  PortalSoporteRoute: typeof PortalSoporteRoute
+  PortalUsuariosRoute: typeof PortalUsuariosRoute
   PortalIndexRoute: typeof PortalIndexRoute
 }
 
 const PortalRouteChildren: PortalRouteChildren = {
+  PortalAplicacionesRoute: PortalAplicacionesRoute,
+  PortalConsumoRoute: PortalConsumoRoute,
+  PortalDocumentosRoute: PortalDocumentosRoute,
+  PortalFacturacionRoute: PortalFacturacionRoute,
   PortalNotificacionesRoute: PortalNotificacionesRoute,
+  PortalPerfilRoute: PortalPerfilRoute,
+  PortalSeguridadRoute: PortalSeguridadRoute,
+  PortalSoporteRoute: PortalSoporteRoute,
+  PortalUsuariosRoute: PortalUsuariosRoute,
   PortalIndexRoute: PortalIndexRoute,
 }
 
@@ -311,3 +479,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
