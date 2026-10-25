@@ -5,8 +5,10 @@ import { PageHeader, SectionCard, StatCard, StatusPill, provisioningStatusMeta }
 import { Button } from "@/components/ui/button";
 import { fmtDateTime, fmtDuration } from "@/lib/format";
 import { useProvisioning } from "@/lib/provisioning/use-provisioning";
+import { pageMeta } from "@/lib/route-meta";
 
 export const Route = createFileRoute("/aprovisionamiento/")({
+  head: () => pageMeta("Panel de Aprovisionamiento — Nexora", "Estado operativo, solicitudes pendientes, errores y métricas de aprovisionamiento."),
   component: Panel,
 });
 

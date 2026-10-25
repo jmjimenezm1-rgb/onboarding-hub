@@ -4,10 +4,15 @@ import { toast } from "sonner";
 
 import { PageHeader, SectionCard, StatusPill } from "@/components/common/ui-bits";
 import { Switch } from "@/components/ui/switch";
-import { notificationPreferences, notifications } from "@/lib/domain/seed";
+import { Button } from "@/components/ui/button";
+import { Check } from "lucide-react";
+import { useNotifications, markNotificationsRead } from "@/lib/portal/notifications";
+import { notificationPreferences } from "@/lib/domain/seed";
 import { fmtDateTime } from "@/lib/format";
+import { pageMeta } from "@/lib/route-meta";
 
 export const Route = createFileRoute("/portal/notificaciones")({
+  head: () => pageMeta("Notificaciones — Portal del Cliente Nexora", "Avisos, renovaciones, alertas y preferencias de comunicación de tu empresa."),
   component: Notificaciones,
 });
 
@@ -23,13 +28,15 @@ const prefs = [
 
 function Notificaciones() {
   const [estado, setEstado] = useState(notificationPreferences);
+  const notifications = useNotifications();
+  const sinLeer = notifications.filter((item) => !item.leida).length;
 
   return (
     <div className="space-y-6">
       <PageHeader titulo="Notificaciones" descripcion="Mensajes, alertas, renovaciones, cambios e incidencias de tu empresa." />
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <SectionCard className="lg:col-span-2" titulo={`${notifications.filter((n) => !n.leida).length} sin leer`}>
+        <SectionCard className="lg:col-span-2" titulo={`${sinLeer} sin leer`} acciones={<Button variant="outline" size="sm" disabled={sinLeer === 0} onClick={() => markNotificationsRead()}><Check aria-hidden />Marcar todas leídas</Button>}>
           <ul className="divide-y divide-border">
             {notifications.map((n) => (
               <li key={n.id} className="flex flex-wrap items-start gap-3 px-4 py-3.5 md:px-5">
@@ -39,6 +46,7 @@ function Notificaciones() {
                   <p className="mt-1 text-xs text-muted-foreground">{fmtDateTime(n.fecha)}</p>
                 </div>
                 <StatusPill tono={tono[n.tipo]}>{n.tipo}</StatusPill>
+                {!n.leida ? <Button variant="ghost" size="icon" aria-label={`Marcar como leída: ${n.titulo}`} title="Marcar como leída" onClick={() => markNotificationsRead(n.id)}><Check aria-hidden /></Button> : null}
               </li>
             ))}
           </ul>

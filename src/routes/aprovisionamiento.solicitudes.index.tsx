@@ -22,8 +22,10 @@ import type { ProvisioningOperation, SourceSystem } from "@/lib/domain/types";
 import { fmtDateTime, fmtDuration } from "@/lib/format";
 import { createRequest, retryRequest } from "@/lib/provisioning/store";
 import { useProvisioning } from "@/lib/provisioning/use-provisioning";
+import { pageMeta } from "@/lib/route-meta";
 
 export const Route = createFileRoute("/aprovisionamiento/solicitudes/")({
+  head: () => pageMeta("Solicitudes de Aprovisionamiento — Nexora", "Consulta y filtra solicitudes por cliente, aplicación, origen, operación y estado."),
   component: Solicitudes,
 });
 

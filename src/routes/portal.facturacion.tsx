@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { currentTenant, invoices } from "@/lib/domain/seed";
 import { fmtCurrency, fmtDate } from "@/lib/format";
 import { platform } from "@/lib/integration/mock-adapters";
+import { downloadPdf } from "@/lib/integration/demo-pdf";
 
 export const Route = createFileRoute("/portal/facturacion")({
   head: () => ({
@@ -27,6 +28,7 @@ const estadoTono = { pagada: "exito", pendiente: "aviso", vencida: "error" } as 
 
 function PortalFacturacion() {
   const [metodo, setMetodo] = useState<{ tipo: string; detalle: string; predeterminado: boolean } | null>(null);
+  const [descargando, setDescargando] = useState<string | null>(null);
 
   useEffect(() => {
     void platform.billing.getPaymentMethod(currentTenant.id).then(setMetodo);
@@ -36,8 +38,15 @@ function PortalFacturacion() {
   const totalAnual = invoices.reduce((a, i) => a + i.importe, 0);
 
   async function descargar(id: string, numero: string) {
-    const url = await platform.billing.getInvoicePdfUrl(currentTenant.id, id);
-    toast.success(`PDF de ${numero} listo`, { description: url });
+    if (descargando) return;
+    setDescargando(id);
+    try {
+      const url = await platform.billing.getInvoicePdfUrl(currentTenant.id, id);
+      downloadPdf(url, `${numero}-ejemplo.pdf`);
+      toast.success("Factura de ejemplo descargada");
+    } catch {
+      toast.error("No se ha podido descargar la factura");
+    } finally { setDescargando(null); }
   }
 
   return (
@@ -83,8 +92,8 @@ function PortalFacturacion() {
                     <StatusPill tono={estadoTono[i.estado]}>{i.estado}</StatusPill>
                   </td>
                   <td className="px-4 py-3 text-right md:px-5">
-                    <Button size="sm" variant="outline" onClick={() => descargar(i.id, i.numero)}>
-                      <Download className="size-3.5" aria-hidden /> Descargar
+                    <Button size="sm" variant="outline" disabled={descargando !== null} onClick={() => descargar(i.id, i.numero)}>
+                      <Download className="size-3.5" aria-hidden /> {descargando === i.id ? "Descargando…" : "Descargar"}
                     </Button>
                   </td>
                 </tr>

@@ -13,6 +13,7 @@ import {
 import type { Ticket } from "../domain/types";
 import { publish } from "./event-bus";
 import type { PlatformPorts } from "./ports";
+import { createDemoPdf } from "./demo-pdf";
 
 const wait = (ms = 220) => new Promise<void>((r) => setTimeout(r, ms));
 
@@ -36,9 +37,16 @@ export const mockPorts: PlatformPorts = {
       await wait();
       return seedInvoices;
     },
-    async getInvoicePdfUrl(_tenantId, invoiceId) {
+    async getInvoicePdfUrl(tenantId, invoiceId) {
       await wait(120);
-      return `https://facturacion.mock/api/v1/invoices/${invoiceId}/pdf`;
+      const invoice = seedInvoices.find((item) => item.id === invoiceId);
+      if (!invoice) throw new Error("Factura no encontrada");
+      return createDemoPdf(`Factura ${invoice.numero}`, [
+        `Empresa: ${tenantId}`, `Fecha: ${invoice.fecha}`, `Vencimiento: ${invoice.vencimiento}`,
+        `Base: ${invoice.importe.toFixed(2)} EUR`, `Impuestos: ${invoice.impuestos.toFixed(2)} EUR`,
+        `Total: ${(invoice.importe + invoice.impuestos).toFixed(2)} EUR`,
+        `Estado: ${invoice.estado}`, `Metodo de pago: ${invoice.metodoPago}`,
+      ]);
     },
     async getPaymentMethod() {
       await wait(120);
@@ -89,13 +97,23 @@ export const mockPorts: PlatformPorts = {
             }
           : t,
       );
-      return tickets.find((t) => t.id === input.ticketId)!;
+      const ticket = tickets.find((t) => t.id === input.ticketId);
+      if (!ticket) throw new Error("Incidencia no encontrada");
+      return ticket;
     },
   },
   documents: {
     async list() {
       await wait();
       return seedDocuments;
+    },
+    async getPdfUrl(tenantId, documentId) {
+      const item = seedDocuments.find((document) => document.id === documentId);
+      if (!item) throw new Error("Documento no encontrado");
+      return createDemoPdf(item.nombre, [
+        `Empresa: ${tenantId}`, `Categoria: ${item.tipo}`, `Actualizado: ${item.actualizadoEn}`,
+        "Este archivo demuestra la descarga del portal. El documento original lo proporcionara el servicio de Contratos.",
+      ]);
     },
   },
   usage: {

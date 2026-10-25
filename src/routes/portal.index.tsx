@@ -2,16 +2,20 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 import { PageHeader, SectionCard, StatCard, StatusPill } from "@/components/common/ui-bits";
-import { currentTenant, invoices, notifications, portalUsers, subscriptions, tickets, usageSeries } from "@/lib/domain/seed";
+import { currentTenant, invoices, portalUsers, subscriptions, tickets, usageSeries } from "@/lib/domain/seed";
+import { useNotifications } from "@/lib/portal/notifications";
+import { pageMeta } from "@/lib/route-meta";
 import { fmtCurrency, fmtDate, fmtNumber, pct } from "@/lib/format";
 
 export const Route = createFileRoute("/portal/")({
+  head: () => pageMeta("Inicio — Portal del Cliente Nexora", "Resumen de aplicaciones, licencias, consumo, facturas y avisos de tu empresa."),
   component: PortalInicio,
 });
 
 const estadoTono = { activa: "exito", suspendida: "error", en_renovacion: "aviso", baja_solicitada: "neutro" } as const;
 
 function PortalInicio() {
+  const notifications = useNotifications();
   const licenciasUsadas = subscriptions.reduce((a, s) => a + s.licenciasUsadas, 0);
   const licenciasTotales = subscriptions.reduce((a, s) => a + s.licenciasTotales, 0);
   const pendientes = invoices.filter((i) => i.estado !== "pagada");

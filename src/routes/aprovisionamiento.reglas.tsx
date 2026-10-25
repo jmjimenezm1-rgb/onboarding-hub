@@ -6,8 +6,10 @@ import { Switch } from "@/components/ui/switch";
 import { fmtNumber } from "@/lib/format";
 import { toggleRule } from "@/lib/provisioning/store";
 import { useProvisioning } from "@/lib/provisioning/use-provisioning";
+import { pageMeta } from "@/lib/route-meta";
 
 export const Route = createFileRoute("/aprovisionamiento/reglas")({
+  head: () => pageMeta("Reglas de Aprovisionamiento — Nexora", "Eventos, condiciones y acciones del motor de reglas de aprovisionamiento."),
   component: Reglas,
 });
 
