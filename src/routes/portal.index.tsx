@@ -4,9 +4,11 @@ import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YA
 import { PageHeader, SectionCard, StatCard, StatusPill } from "@/components/common/ui-bits";
 import { currentTenant, invoices, portalUsers, subscriptions, tickets, usageSeries } from "@/lib/domain/seed";
 import { useNotifications } from "@/lib/portal/notifications";
+import { pageMeta } from "@/lib/route-meta";
 import { fmtCurrency, fmtDate, fmtNumber, pct } from "@/lib/format";
 
 export const Route = createFileRoute("/portal/")({
+  head: () => pageMeta("Inicio — Portal del Cliente Nexora", "Resumen de aplicaciones, licencias, consumo, facturas y avisos de tu empresa."),
   component: PortalInicio,
 });
 

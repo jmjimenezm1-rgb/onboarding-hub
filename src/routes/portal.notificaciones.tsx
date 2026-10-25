@@ -9,8 +9,10 @@ import { Check } from "lucide-react";
 import { useNotifications, markNotificationsRead } from "@/lib/portal/notifications";
 import { notificationPreferences } from "@/lib/domain/seed";
 import { fmtDateTime } from "@/lib/format";
+import { pageMeta } from "@/lib/route-meta";
 
 export const Route = createFileRoute("/portal/notificaciones")({
+  head: () => pageMeta("Notificaciones — Portal del Cliente Nexora", "Avisos, renovaciones, alertas y preferencias de comunicación de tu empresa."),
   component: Notificaciones,
 });
 

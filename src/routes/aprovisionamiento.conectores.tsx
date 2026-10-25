@@ -3,8 +3,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader, SectionCard, StatusPill } from "@/components/common/ui-bits";
 import { connectors } from "@/lib/domain/seed";
 import { fmtDateTime } from "@/lib/format";
+import { pageMeta } from "@/lib/route-meta";
 
 export const Route = createFileRoute("/aprovisionamiento/conectores")({
+  head: () => pageMeta("Conectores de Aprovisionamiento — Nexora", "Estado de los adaptadores simulados de identidad, directorio, pagos e integraciones."),
   component: Conectores,
 });
 

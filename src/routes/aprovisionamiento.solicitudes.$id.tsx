@@ -20,6 +20,8 @@ export const Route = createFileRoute("/aprovisionamiento/solicitudes/$id")({
       { name: "description", content: "Tareas ejecutadas, errores, reintentos y acciones manuales de una solicitud de aprovisionamiento." },
       { property: "og:title", content: "Detalle de solicitud de aprovisionamiento" },
       { property: "og:description", content: "Trazabilidad completa por correlationId con acciones de reintento y reversión." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Detalle,

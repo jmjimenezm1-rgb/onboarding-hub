@@ -4,8 +4,10 @@ import { PageHeader, SectionCard, StatusPill } from "@/components/common/ui-bits
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { auditLog } from "@/lib/domain/seed";
 import { fmtDateTime, fmtDuration } from "@/lib/format";
+import { pageMeta } from "@/lib/route-meta";
 
 export const Route = createFileRoute("/aprovisionamiento/historial")({
+  head: () => pageMeta("Historial de Aprovisionamiento — Nexora", "Registro de acciones, resultados y trazabilidad de solicitudes de aprovisionamiento."),
   component: Historial,
 });
 
