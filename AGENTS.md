@@ -12,3 +12,4 @@
 ## Module boundaries
 - Keep external module calls behind PlatformPorts and the mock adapter injection point so real integrations can replace demos without changing screens.
 - Generate demonstration PDFs through the browser-only, dynamically loaded demo-pdf helper and label them as nonlegal examples so downloads work without implying authentic documents.
+- Share demo notification read state through a useSyncExternalStore module with a stable server snapshot so navigation badges and lists agree without hydration differences.

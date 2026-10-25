@@ -3,6 +3,7 @@ import { Bell, LayoutDashboard, Users, AppWindow, ChartNoAxesCombined, Receipt, 
 
 import { ModuleShell, type NavItem } from "@/components/layout/ModuleShell";
 import { currentTenant } from "@/lib/domain/seed";
+import { useNotifications } from "@/lib/portal/notifications";
 
 const nav: NavItem[] = [
   { to: "/portal", label: "Inicio", icon: LayoutDashboard },
@@ -32,6 +33,8 @@ export const Route = createFileRoute("/portal")({
 });
 
 function PortalLayout() {
+  const unread = useNotifications().filter((item) => !item.leida).length;
+  const portalNav = nav.map((item) => item.to === "/portal/notificaciones" ? { ...item, badge: unread ? String(unread) : "" } : item);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const context = {
     titulo: nav.find((item) => item.to === pathname)?.label ?? "Portal del Cliente",
@@ -39,7 +42,7 @@ function PortalLayout() {
   };
 
   return (
-    <ModuleShell moduleName="Portal del Cliente" moduleTag={currentTenant.organizacion} nav={nav} context={context}>
+    <ModuleShell moduleName="Portal del Cliente" moduleTag={currentTenant.organizacion} nav={portalNav} context={context}>
       <Outlet />
     </ModuleShell>
   );

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { GlobalSearch } from "@/components/common/GlobalSearch";
 import { cn } from "@/lib/utils";
+import { useNotifications } from "@/lib/portal/notifications";
 
 export interface NavItem {
   to: string;
@@ -59,6 +60,8 @@ function NavList({ nav, onNavigate }: { nav: NavItem[]; onNavigate?: () => void 
 
 export function ModuleShell({ moduleName, moduleTag, nav, context, children }: ModuleShellProps) {
   const [searchOpen, setSearchOpen] = useState(false);
+  const [navigationOpen, setNavigationOpen] = useState(false);
+  const unread = useNotifications().filter((item) => !item.leida).length;
 
   const aside = (
     <div className="flex h-full flex-col bg-sidebar p-4 text-sidebar-foreground">
@@ -71,7 +74,7 @@ export function ModuleShell({ moduleName, moduleTag, nav, context, children }: M
           <span className="block truncate text-xs text-sidebar-foreground/60">{moduleTag}</span>
         </span>
       </Link>
-      <NavList nav={nav} />
+      <NavList nav={nav} onNavigate={() => setNavigationOpen(false)} />
       <div className="mt-auto space-y-3 pt-6">
         <div className="rounded-lg border border-sidebar-border bg-sidebar-accent/40 p-3 text-xs text-sidebar-foreground/80">
           <p className="font-medium text-sidebar-accent-foreground">Servicios externos simulados</p>
@@ -96,7 +99,7 @@ export function ModuleShell({ moduleName, moduleTag, nav, context, children }: M
 
       <div className="flex min-w-0 flex-col">
         <header className="sticky top-0 z-20 flex items-center gap-3 border-b border-border bg-background/85 px-4 py-3 backdrop-blur md:px-6">
-          <Sheet>
+          <Sheet open={navigationOpen} onOpenChange={setNavigationOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Abrir navegación">
                 <Menu className="size-5" />
@@ -126,7 +129,7 @@ export function ModuleShell({ moduleName, moduleTag, nav, context, children }: M
           </Button>
           <Link to="/portal/notificaciones" aria-label="Notificaciones" className="relative rounded-md p-2 hover:bg-muted">
             <Bell className="size-5" aria-hidden />
-            <Badge className="absolute -top-0.5 -right-0.5 size-4 justify-center rounded-full p-0 text-[10px]">2</Badge>
+            {unread > 0 ? <Badge className="absolute -top-0.5 -right-0.5 size-4 justify-center rounded-full p-0 text-[10px]">{unread}</Badge> : null}
           </Link>
         </header>
 
