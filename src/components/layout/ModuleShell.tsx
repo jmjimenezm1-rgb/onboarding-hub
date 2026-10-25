@@ -29,7 +29,8 @@ function NavList({ nav, onNavigate }: { nav: NavItem[]; onNavigate?: () => void 
   return (
     <nav aria-label="Navegación del módulo" className="flex flex-col gap-1">
       {nav.map((item) => {
-        const activo = pathname === item.to || (item.to !== "/" && pathname.startsWith(`${item.to}/`));
+        const esInicio = item.to === "/" || item.to === "/portal" || item.to === "/aprovisionamiento";
+        const activo = pathname === item.to || (!esInicio && pathname.startsWith(`${item.to}/`));
         return (
           <Link
             key={item.to}
