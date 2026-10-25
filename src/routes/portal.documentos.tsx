@@ -1,12 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { FileText } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 import { EmptyState, PageHeader, SectionCard } from "@/components/common/ui-bits";
 import { Button } from "@/components/ui/button";
 import { documents } from "@/lib/domain/seed";
 import type { DocumentItem } from "@/lib/domain/types";
 import { fmtDate } from "@/lib/format";
+import { currentTenant } from "@/lib/domain/seed";
+import { platform } from "@/lib/integration/mock-adapters";
+import { downloadPdf } from "@/lib/integration/demo-pdf";
 
 export const Route = createFileRoute("/portal/documentos")({
   head: () => ({
@@ -33,7 +37,18 @@ const tipos: { clave: DocumentItem["tipo"] | "todos"; label: string }[] = [
 
 function PortalDocumentos() {
   const [tipo, setTipo] = useState<DocumentItem["tipo"] | "todos">("todos");
+  const [descargando, setDescargando] = useState<string | null>(null);
   const lista = tipo === "todos" ? documents : documents.filter((d) => d.tipo === tipo);
+  async function descargar(item: DocumentItem) {
+    if (descargando) return;
+    setDescargando(item.id);
+    try {
+      const url = await platform.documents.getPdfUrl(currentTenant.id, item.id);
+      downloadPdf(url, `${item.nombre}-ejemplo.pdf`);
+      toast.success("Documento de ejemplo descargado");
+    } catch { toast.error("No se ha podido descargar el documento"); }
+    finally { setDescargando(null); }
+  }
 
   return (
     <div className="space-y-6">
@@ -66,10 +81,8 @@ function PortalDocumentos() {
                     {d.tipo} · {d.tamano} · actualizado el {fmtDate(d.actualizadoEn)}
                   </p>
                 </div>
-                <Button size="sm" variant="outline" asChild>
-                  <a href={d.url} download>
-                    Descargar
-                  </a>
+                <Button size="sm" variant="outline" disabled={descargando !== null} onClick={() => descargar(d)}>
+                  {descargando === d.id ? "Descargando…" : "Descargar"}
                 </Button>
               </li>
             ))}

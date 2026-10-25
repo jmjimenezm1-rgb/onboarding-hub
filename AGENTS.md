@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Module boundaries
+- Keep external module calls behind PlatformPorts and the mock adapter injection point so real integrations can replace demos without changing screens.
+- Generate demonstration PDFs through the browser-only, dynamically loaded demo-pdf helper and label them as nonlegal examples so downloads work without implying authentic documents.

@@ -32,6 +32,7 @@ export interface SupportPort {
 
 export interface DocumentsPort {
   list(tenantId: string): Promise<DocumentItem[]>;
+  getPdfUrl(tenantId: string, documentId: string): Promise<string>;
 }
 
 export interface UsagePort {
