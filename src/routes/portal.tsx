@@ -1,11 +1,19 @@
 import { Outlet, createFileRoute, useRouterState } from "@tanstack/react-router";
-import { Bell, LayoutDashboard } from "lucide-react";
+import { Bell, LayoutDashboard, Users, AppWindow, ChartNoAxesCombined, Receipt, Files, LifeBuoy, Building2, ShieldCheck } from "lucide-react";
 
 import { ModuleShell, type NavItem } from "@/components/layout/ModuleShell";
 import { currentTenant } from "@/lib/domain/seed";
 
 const nav: NavItem[] = [
   { to: "/portal", label: "Inicio", icon: LayoutDashboard },
+  { to: "/portal/usuarios", label: "Usuarios y roles", icon: Users },
+  { to: "/portal/aplicaciones", label: "Aplicaciones y licencias", icon: AppWindow },
+  { to: "/portal/consumo", label: "Consumo", icon: ChartNoAxesCombined },
+  { to: "/portal/facturacion", label: "Facturación", icon: Receipt },
+  { to: "/portal/documentos", label: "Documentos", icon: Files },
+  { to: "/portal/soporte", label: "Soporte", icon: LifeBuoy },
+  { to: "/portal/perfil", label: "Perfil de empresa", icon: Building2 },
+  { to: "/portal/seguridad", label: "Seguridad", icon: ShieldCheck },
   { to: "/portal/notificaciones", label: "Notificaciones", icon: Bell, badge: "2" },
 ];
 
@@ -25,10 +33,10 @@ export const Route = createFileRoute("/portal")({
 
 function PortalLayout() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const context =
-    pathname === "/portal/notificaciones"
-      ? { titulo: "Notificaciones", subtitulo: "Avisos, alertas de consumo y renovaciones" }
-      : { titulo: "Inicio", subtitulo: `${currentTenant.organizacion} · plan ${currentTenant.plan}` };
+  const context = {
+    titulo: nav.find((item) => item.to === pathname)?.label ?? "Portal del Cliente",
+    subtitulo: `${currentTenant.organizacion} · plan ${currentTenant.plan}`,
+  };
 
   return (
     <ModuleShell moduleName="Portal del Cliente" moduleTag={currentTenant.organizacion} nav={nav} context={context}>

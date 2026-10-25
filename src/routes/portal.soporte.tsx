@@ -142,7 +142,7 @@ function PortalSoporte() {
           )}
         </SectionCard>
 
-        <SectionCard className="lg:col-span-3" titulo={actual ? actual.asunto : "Conversación"} descripcion={actual?.referencia}>
+        <SectionCard className="lg:col-span-3" titulo={actual ? actual.asunto : "Conversación"} descripcion={actual?.referencia ?? ""}>
           {actual ? (
             <div className="space-y-4 p-4 md:px-5">
               <ul className="space-y-3">
